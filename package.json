@@ -1,0 +1,34 @@
+{
+  "name": "serverless-plugin-var-substitution",
+  "version": "1.0.0",
+  "description": "Serverless plugin to substitute variables in compiled cloudformation template",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest --env node --coverage",
+    "test:watch": "jest --env node --watch"
+  },
+  "author": "Jose Manuel Marron <manemarron@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manemarron/serverless-plugin-var-substitution.git"
+  },
+  "keywords": [
+    "serverless",
+    "plugin",
+    "cloudformation",
+    "var",
+    "substitution"
+  ],
+  "bugs": {
+    "url": "https://github.com/manemarron/serverless-plugin-var-substitution/issues"
+  },
+  "homepage": "https://github.com/manemarron/serverless-plugin-var-substitution#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "jest": "^24.7.1"
+  },
+  "directories": {
+    "lib": "lib"
+  }
+}
