@@ -13,8 +13,9 @@ custom:
     varSubstitution:
         pattern: '##'
         variables:
-        - search: connection_id
-          replace: '${stageVariables.ConnectionId}'
+        - stageVariables.ConnectionId
+        - search: something_random
+          replace: something_more_random
 Resources:
     ApiGatewayRestApi:
         Type: AWS::ApiGateway::Deployment
@@ -24,8 +25,8 @@ Resources:
                     '/some/path':
                         get:
                             x-amazon-apigateway-integration:
-                                connectionId: ##connection_id##
-                        
+                                connectionId: ##stageVariables.ConnectionId##
+                                otherProperty: ##something_random##
 ...
 ```
 
@@ -40,12 +41,13 @@ custom:
     varSubstitution:
         pattern: &&
         variables:
+        - 'some string word'
         - search: 'some word'
           replace: 'some other word'
 ...
 ```
 
-For the above example, the plugin would search for all occurences of &&some word&& in the compiled CloudFormation template and replace them with `some other word`.
+For the above example, the plugin would search for all occurences in the compiled CloudFormation template of &&some string word&& and replace them for ${some string word} and also all occurences of &&some word&& and replace them with `some other word`.
 
 ## Getting Started
 1. Install plugin from npm:
@@ -59,5 +61,26 @@ plugins:
 ```
 3. Include variables in your CloudFormation templates.
 
+## Configuration
+The plugin can be configured by setting the next parameters in the `custom.varSubstitution` object:
+- **pattern**: String. The prefix and suffix that will be searched for. Defaults to '##'.
+- **variables**: Array. The words that will be searched for to replace. Can be of 2 types:
+    - String. Searches for the word and replaces it with ${word}
+
+    ```yaml
+    varSubstitution:
+        variables:
+        - 'some word'  # transformed to ${some word}
+    ```
+
+    - Object. Searches for the word in the 'search' property and replaces it with the word in the replace property.
+
+
+    ```yaml
+    varSubstitution:
+        variables:
+        - search: 'some word'  # transformed to 'some other word'
+          replace: 'some other word'
+    ```
 ## More Info
 Heavily influenced by [serverless-plugin-time-substitution](https://github.com/manemarron/serverless-plugin-time-substitution)
